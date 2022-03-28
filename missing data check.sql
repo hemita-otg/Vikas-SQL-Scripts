@@ -1,0 +1,3 @@
+select * from mt2sql15.sql15.dbo.bar50flyerreports where flyerid in ('7191121','7170494','7191050')
+select flyerid,count(pagedetailid) from mt2sql15.sql15.dbo.bar50detailreports where flyerid in ('7191121','7170494','7191050') group by flyerid 
+select flyerid,count(pagedetailid) from mt2sql15.masteradviewdata.dbo.masterpagedetailtable where flyerid in ('7191121','7170494','7191050') group by flyerid 
