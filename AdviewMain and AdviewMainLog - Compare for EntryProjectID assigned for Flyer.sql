@@ -1,0 +1,18 @@
+DROP TABLE TEMPDB..AMAML
+
+WITH 
+AM AS (SELECT FLYERID,ADDATE,ENTRYPROJECTid  FROM MASTERADVIEWDATA..ADVIEWMAIN WHERE YEAR(ADDATE)='2016' AND MONTH(ADDATE)=8 AND ENTRYPROJECTID IS NOT  NULL  ),
+AML AS ( SELECT FLYERID,ADDATE,ENTRYPROJECTid,LogTimeStamp  FROM FVDATALOG..ADVIEWMAINLOG WHERE YEAR(ADDATE)='2016' AND MONTH(ADDATE)=8 AND ENTRYPROJECTID IS NOT  NULL)
+SELECT AM.*,AML.FLYERID AS FLYERIDLOG,AML.ADDATE AS ADDATELOG,AML.ENTRYPROJECTID AS ENTRYPROJECTIDLOG,AML.LogTimeStamp   INTO TEMPDB..AMAML FROM AM JOIN AML ON AM.FLYERID=AML.FLYERID 
+
+
+SELECT flyerid,count(1) FROM TEMPDB..AMAML 
+group by flyerid 
+
+
+select * from tempdb..amaml where flyerid ='11583801'
+
+select flyerid,addate,EntryProjectID,min(LogTimeStamp) as logtimestamp  from tempdb..amaml 
+where LogTimeStamp > addatelog and entryprojectid=entryprojectidlog 
+group by flyerid,addate,EntryProjectID 
+order by addate,flyerid 
